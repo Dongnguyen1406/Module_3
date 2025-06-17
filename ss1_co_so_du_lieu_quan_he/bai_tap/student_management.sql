@@ -1,4 +1,13 @@
 USE student_management;
+CREATE TABLE Teachers(
+	id int,
+    name varchar(50),
+    age int,
+    country varchar(50));
+INSERT into Teachers(id, name, age, country)
+Value ('1', 'Tran Van Chanh', 30, 'vienam'),
+	('2', 'Truong Tan Hai', '27', 'vienam');
+SELECT * From Teachers;
 CREATE TABLE Class(
 	id int,
     name varchar(50));
