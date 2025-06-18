@@ -1,4 +1,3 @@
-USE student_management;
 use student_management;
 CREATE TABLE teachers(
 	teacher_id int primary key,
@@ -26,7 +25,7 @@ SELECT * From students;
 CREATE TABLE classes(
 	class_id int primary key,
     class_name varchar(200));
-INSERT into classes(id, name)
+INSERT into classes(class_id, class_name)
 Value ('001', 'C0225G1'),
 	('002', 'C0325G1');
     
