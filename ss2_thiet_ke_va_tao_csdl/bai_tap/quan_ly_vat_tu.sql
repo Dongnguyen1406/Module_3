@@ -40,7 +40,7 @@ create table nha_cung_cap(
     primary key (ma_nha_cung_cap)
 );
 
-create table cung_cap(
+create table chi_tiet_cung_cap(
 	ma_nha_cung_cap int,
     so_dat_hang int,
     primary key(ma_nha_cung_cap, so_dat_hang),
