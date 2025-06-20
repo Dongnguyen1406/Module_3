@@ -67,7 +67,7 @@ VALUES (1, 1, 8, 1),
  (2, 1, 12, 1);
 
 
- -- Thực hành ss3
+ -- Thực hành
  select s.student_id, s.student_name, c.class_name
  from students s join classes c on s.class_id = c.class_id; 
  
@@ -86,7 +86,7 @@ from students s join marks m on s.student_id = m.student_id join subjects sub on
 where sub.subject_name = "CF";
 
 
--- Bài tập ss3
+-- Bài tập
 select * from students
 where student_name like 'h%';
 
@@ -105,66 +105,6 @@ select s.student_name, sub.subject_name, m.mark
 from students s join marks m on s.student_id = m.student_id
 join subjects sub on sub.subject_id = m.subject_id
 order by m.mark desc, s.student_name; 
-
--- thực hành ss4
--- Hiển thị số lượng sinh viên ở từng nơi
-select address, count(student_id) as 'số lượng sinh viên'
-from students
-group by address;
-
--- Tính điểm trung bình các môn học của mỗi học viên
-select s.student_id,s.student_name, avg(mark) as 'Điểm trung bình'
-from students s  
-join marks m on s.student_id = m.student_id
-group by s.student_id, s.student_name;
-
--- Hiển thị những học viên có điểm tb > 10
-select s.student_id, s.student_name, avg(mark) as 'Điểm trung bình'
-from students s
-join marks m on s.student_id = m.student_id
-group by s.student_id, s.student_name
-having avg(mark) > 10;
-
--- Hiển thị thông tin các học viên có điểm tb lớn nhất
-select s.student_id, s.student_name, avg(mark) as 'Điểm trung bình'
-from students s
-join marks m on s.student_id = m.student_id
-group by s.student_id, s.student_name
--- sử dụng having và all để tìm ra học viên có điểm tb lớn nhất
-having avg(mark) >= all (select avg(mark) from marks group by marks.student_id);
-
-
--- Bài tập ss4
--- Hiển thị tất cả các thông tin môn học (bảng subject) có credit lớn nhất.
-select * 
-from subjects
-where credit = (select max(credit) from subjects);
-
--- Hiển thị các thông tin môn học có điểm thi lớn nhất.
-select *
-from subjects sub
-join marks m on sub.subject_id = m.subject_id
-where m.mark = (select max(mark) from marks);
-
--- Hiển thị các thông tin sinh viên và điểm trung bình của mỗi sinh viên, xếp hạng theo thứ tự điểm giảm dần
-select s.student_id,
-    s.student_name,
-    s.address,
-    s.phone,
-    s.student_status,
-    s.class_id, 
-    avg(m.mark) as average_mark
-from students s
-join marks m on s.student_id = m.student_id
-group by s.student_id,
-    s.student_name,
-    s.address,
-    s.phone,
-    s.student_status,
-    s.class_id
-order by average_mark desc;
-
-
 
 
 
