@@ -1,0 +1,39 @@
+.nav{
+    display: flex;
+    justify-content: center;
+}
+
+.nav ul{
+    display: flex;
+    list-style: none;
+    text-align: center;
+    padding: 0;
+}
+
+.nav ul li{
+  padding: 10px;
+}
+
+.header .nav ul li a{
+    text-decoration: none;
+    color: black;
+}
+
+.main{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 50px;
+    margin: 20px;
+}
+
+.left-content img{
+    width: 400px;
+}
+.right{
+    
+}
+
+iframe{
+    width: 700px;
+    height: 400px;
+}

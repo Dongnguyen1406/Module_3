@@ -1,0 +1,57 @@
+body {
+    font-family: Verdana, sans-serif;
+    font-size: 0.9em;
+}
+
+header {
+    background-color: black;
+    color: white;
+    padding: 15px;
+    margin: 0;
+}
+
+nav {
+    margin: 0;
+    padding: 10px;
+    
+}
+nav ul {
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 5px;
+}
+
+article{
+    background-color: white;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+section, aside {
+    padding: 15px;
+    background-color: white;
+}
+
+aside{
+    height: 90%;
+}
+
+.grid-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    padding: 20px;
+    margin: 0 10px 10px 10px;
+    background-color: #CDCDCD;
+}
+
+footer {
+    background-color: black;
+    color: white;
+    padding: 15px;
+    
+}
+
