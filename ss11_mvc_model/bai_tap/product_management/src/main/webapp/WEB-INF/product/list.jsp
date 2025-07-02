@@ -40,24 +40,16 @@
             </tr>
         </c:forEach>
         </tbody>
-        </tbody>
+        <c:if test="${empty customers}">
+            <tr>
+                <td colspan="5" class="text-center text-danger fw-bold py-3">
+                    Không có dữ liệu sản phẩm
+                </td>
+            </tr>
+        </c:if>
     </table>
-    <c:if test="${not empty mess}">
-        <div class="alert alert-primary" role="alert" id="mess">
-                ${mess}
-        </div>
-    </c:if>
+    
 
 </div>
 </body>
-<script>
-    window.addEventListener('DOMContentLoaded', () => {
-        const messageDiv = document.getElementById('mess');
-        if (messageDiv) {
-            setTimeout(() => {
-                messageDiv.style.display = 'none';
-            }, 2000);
-        }
-    });
-</script>
 </html>

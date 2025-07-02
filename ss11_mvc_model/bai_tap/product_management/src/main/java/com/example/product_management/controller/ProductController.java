@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Currency;
 import java.util.List;
 
 @WebServlet(name = "ProductControlelr", urlPatterns = "/product")
@@ -22,88 +21,99 @@ public class ProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
-        
-        if (action == null){
+        if (action == null) {
             action = "";
         }
-        
-        switch (action){
+
+        switch (action) {
             case "create":
-                req.getRequestDispatcher("/WEB-INF/product/create.jsp").forward(req, resp);
+                showCreateForm(req, resp);
+                break;
+            case "delete":
+                int idToDelete = Integer.parseInt(req.getParameter("id"));
+                Product productToDelete = productService.findById(idToDelete);
+                req.setAttribute("product", productToDelete); // phải là product
+                showDeleteForm(req, resp);
+                break;
+            case "search":
+                break;
+            case "view":
+                int idToView = Integer.parseInt(req.getParameter("id"));
+                Product product1 = productService.findById(idToView);
+                req.setAttribute("product", product1);
+                showViewForm(req, resp);
                 break;
             case "edit":
                 int idToEdit = Integer.parseInt(req.getParameter("id"));
-                Product product = this.productService.findById(idToEdit);
-                req.setAttribute("product", product);
-                req.getRequestDispatcher("/WEB-INF/product/edit.jsp").forward(req, resp);
-                break;
-            case "delete":
-                req.getRequestDispatcher("/WEB-INF/product/delete.jsp").forward(req, resp);
-                break;
-            case "view":
-                req.getRequestDispatcher("/WEB-INF/product/view.jsp").forward(req, resp);
+                Product product2 = productService.findById(idToEdit);
+                req.setAttribute("product", product2);
+                showUpdateForm(req, resp);
                 break;
             default:
-                List<Product> products = productService.findAll();
-                req.setAttribute("products", products);
-                String message = req.getParameter("message");
-                if (message != null){
-                    switch (message){
-                        case "created":
-                            req.setAttribute("mess", "Thêm mới thành công!");
-                    }
-                }
+                List<Product> product3 = productService.findAll();
+                req.setAttribute("products", product3);
                 req.getRequestDispatcher("/WEB-INF/product/list.jsp").forward(req, resp);
         }
     }
 
+    public void showCreateForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("product", productService.findAll());
+        req.getRequestDispatcher("/WEB-INF/product/create.jsp").forward(req, resp);
+    }
+
+    public void showUpdateForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/WEB-INF/product/edit.jsp").forward(req, resp);
+    }
+
+    public void showViewForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/WEB-INF/product/view.jsp").forward(req, resp);
+    }
+
+    public void showDeleteForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/WEB-INF/product/delete.jsp").forward(req, resp);
+    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
-        resp.setContentType("text/html;charset=UTF-8");
-        
-        String action = req.getParameter("action");
-        if (action == null){
-            action = "";
-        }
-        switch (action){
-            case "create":
-                Integer codeProduct = Integer.parseInt(req.getParameter("codeProduct"));
-                String nameProduct = req.getParameter("nameProduct");
-                Integer quantity = Integer.parseInt(req.getParameter("quantity"));
-                String image = "img/avata.jpg";
-                Product product = new Product(codeProduct, nameProduct, quantity, image);
-                productService.add(product);
-                resp.sendRedirect("/product?message=created");
-                break;
-            case "edit":
-                String name = req.getParameter("nameProduct");
-                Integer quantityProduct = Integer.parseInt(req.getParameter("quantity"));
-                Product product1 = new Product(codeProduct, nameProduct)
-                        
-                this.productService.update(idToEdit, product1);
-                req.setAttribute("product", product1);
-                req.setAttribute("message", "Sản phảm đã cập nhập thành công!");
-                dispatcher = req.getRequestDispatcher("/WEB-INF/product/edit.jsp");
-                dispatcher.forward(req, resp);
-                break;
-            case "delete":
-                int idToDelete = Integer.parseInt(req.getParameter("id"));
-                Product product2 = this.productService.findById(idToDelete);
-                RequestDispatcher dispatcher1;
-                this.productService.delete(idToDelete);
-                resp.sendRedirect("/products");
-                break;
-            case "view":
-                int idToView = Integer.parseInt(req.getParameter("id"));
-                Product product3= this.productService.findById(idToView);
-                RequestDispatcher dispatcher2;
-                req.setAttribute("product", product3);
-                dispatcher2 = req.getRequestDispatcher("product/view.jsp");
-                dispatcher2.forward(req, resp);
-                break;
-            case "search":
-                break;
-        }
+           String action = req.getParameter("action");
+           switch (action){
+               case "create":
+                   create(req, resp);
+                   break;
+               case "delete":
+                   delete(req, resp);
+                   break;
+               case "search":
+                   break;
+               case "edit":
+                   update(req, resp);
+                   break;
+           }
+    }
+    
+    private void create(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        int id = Integer.parseInt(req.getParameter("codeProduct"));
+        String name = req.getParameter("nameProduct");
+        int quantity = Integer.parseInt(req.getParameter("quantity"));
+        String image = "img/avata.jpg";
+        Product product = new Product(id, name, quantity, image);
+        productService.add(product);
+        resp.sendRedirect("/product?mess=create success");
+    }
+    
+    private void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        int idToDelete = Integer.parseInt(req.getParameter("id"));
+        productService.delete(idToDelete);
+        resp.sendRedirect("/product?mess=delete success");
+    }
+    
+    private void update(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException{
+        int id = Integer.parseInt(req.getParameter("id"));
+        String name = req.getParameter("nameProduct");
+        int quantity = Integer.parseInt(req.getParameter("quantity"));
+        String image = "img/avata.jpg";
+        Product product = new Product(id, name, quantity, image);
+        productService.update(id, product);
+        resp.sendRedirect("/product?mess=update success");
     }
 }
