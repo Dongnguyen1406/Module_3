@@ -1,4 +1,4 @@
-package com.example.ung_dung_calculator.model;
+package com.example.ung_dung_calculator.service;
 
 public class Calculator {
     public static float calculate(float firstOperand, float secondOperand, char operator){
