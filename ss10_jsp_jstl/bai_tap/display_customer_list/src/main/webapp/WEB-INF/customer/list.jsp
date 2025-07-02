@@ -19,11 +19,11 @@
     <table class="table table-bordered table-hover table-striped align-middle">
         <thead class="table-primary">
         <tr class="text-center">
-            <th >No</th>
-            <th >Tên</th>
-            <th >Ngày sinh</th>
-            <th >Địa chỉ</th>
-            <th >Ảnh</th>
+            <th>No</th>
+            <th>Tên</th>
+            <th>Ngày sinh</th>
+            <th>Địa chỉ</th>
+            <th>Ảnh</th>
         </tr>
         </thead>
         <tbody>
@@ -33,10 +33,19 @@
                 <td>${customer.nameCustomer}</td>
                 <td>${customer.dob}</td>
                 <td>${customer.address}</td>
-                <td style="text-align: center;"><img src="${pageContext.request.contextPath}/${customer.image}" alt="" width="80" height="80"></td>
+                <td style="text-align: center;"><img src="${pageContext.request.contextPath}/${customer.image}" alt=""
+                                                     width="80" height="80"></td>
             </tr>
         </c:forEach>
         </tbody>
+        <c:if test="${empty customers}">
+            <tr>
+                <td colspan="5" class="text-center text-danger fw-bold py-3">
+                    Không có dữ liệu khách hàng
+                </td>
+            </tr>
+        </c:if>
+
     </table>
 </div>
 </body>
